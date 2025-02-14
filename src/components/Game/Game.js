@@ -52,6 +52,14 @@ function Game() {
       return true
     }
   }
+
+  function inputDisabled() {
+    return (
+      guesses.length >= NUM_OF_GUESSES_ALLOWED ||
+      status === 'win' ||
+      status === 'lose'
+    )
+  }
   return (
     <>
       <div>
@@ -72,7 +80,7 @@ function Game() {
             <input
               ref={inputRef}
               onChange={(event) => setGuess(event.target.value.toUpperCase())}
-              disabled={guesses.length >= NUM_OF_GUESSES_ALLOWED}
+              disabled={inputDisabled()}
               id="guess-input"
               type="text"
               value={guess}
