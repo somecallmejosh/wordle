@@ -19,7 +19,7 @@ function Game() {
   const [guess, setGuess] = useState('')
   const [message, setMessage] = useState('')
   const [guesses, setGuesses] = useState([])
-  const [status, setStatus] = useState('')
+  const [status, setStatus] = useState('active')
 
   function handleSubmit(event) {
     event.preventDefault()
@@ -34,7 +34,7 @@ function Game() {
     }
 
     if (nextGuesses.length >= NUM_OF_GUESSES_ALLOWED) {
-      setStatus('lose')
+      answer !== guess && setStatus('lose')
     }
     return
   }
@@ -52,13 +52,6 @@ function Game() {
     }
   }
 
-  function inputDisabled() {
-    return (
-      guesses.length >= NUM_OF_GUESSES_ALLOWED ||
-      status === 'win' ||
-      status === 'lose'
-    )
-  }
   return (
     <>
       <div>
@@ -79,7 +72,7 @@ function Game() {
             <input
               ref={inputRef}
               onChange={(event) => setGuess(event.target.value.toUpperCase())}
-              disabled={inputDisabled()}
+              disabled={status !== 'active'}
               id="guess-input"
               type="text"
               value={guess}
