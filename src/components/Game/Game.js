@@ -25,19 +25,18 @@ function Game() {
     event.preventDefault()
     if (!validateInput()) return
     setGuess('')
-    setGuesses([...guesses, guess])
-    setGameStatus()
-    return
-  }
 
-  function setGameStatus() {
+    const nextGuesses = [...guesses, guess]
+    setGuesses(nextGuesses)
+
     if (guess === answer) {
       setStatus('win')
     }
 
-    if (guesses.length + 1 === NUM_OF_GUESSES_ALLOWED) {
-      if (guess !== answer) setStatus('lose')
+    if (nextGuesses.length >= NUM_OF_GUESSES_ALLOWED) {
+      setStatus('lose')
     }
+    return
   }
 
   function validateInput() {
