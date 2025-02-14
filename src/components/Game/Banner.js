@@ -1,4 +1,4 @@
-export function Banner({ status, answer, guesses }) {
+export function Banner({ status, answer, guesses, children }) {
   return (
     <div>
       {status === 'lose' && (
@@ -6,6 +6,7 @@ export function Banner({ status, answer, guesses }) {
           <p>
             Sorry, the correct answer is <strong>{answer}</strong>!
           </p>
+          {children}
         </div>
       )}
       {status === 'win' && (
@@ -14,6 +15,7 @@ export function Banner({ status, answer, guesses }) {
             <strong>Congratulations!</strong> You got it in{' '}
             <strong>{guesses} guesses</strong>.
           </p>
+          {children}
         </div>
       )}
     </div>

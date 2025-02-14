@@ -7,19 +7,13 @@ import { sample } from '../../utils'
 import { Keyboard } from './Keyboard'
 import { Banner } from './Banner'
 
-const answer = sample(WORDS)
-
-console.info({ answer })
-
 function Game() {
-  const inputRef = useRef(null)
-  useEffect(() => {
-    inputRef.current.focus()
-  }, [])
+  const [answer, setAnswer] = useState(sample(WORDS))
   const [guess, setGuess] = useState('')
-  const [message, setMessage] = useState('')
   const [guesses, setGuesses] = useState([])
+  const [message, setMessage] = useState('')
   const [status, setStatus] = useState('active')
+  const inputRef = useRef(null)
 
   function handleSubmit(event) {
     event.preventDefault()
@@ -52,6 +46,17 @@ function Game() {
     }
   }
 
+  function handleNewGame() {
+    setStatus('active')
+    setGuesses([])
+    setAnswer(sample(WORDS))
+  }
+
+  useEffect(() => {
+    inputRef.current.focus()
+  }, [status, setStatus])
+
+  console.info({ answer })
   return (
     <>
       <div>
@@ -86,7 +91,9 @@ function Game() {
             )}
           </form>
           <Keyboard guessedLetters={guesses} answer={answer} />
-          <Banner status={status} answer={answer} guesses={guesses.length} />
+          <Banner status={status} answer={answer} guesses={guesses.length}>
+            <button onClick={handleNewGame}>New Game</button>
+          </Banner>
         </div>
       </div>
     </>
